@@ -7,6 +7,8 @@ const fileName = "notes.json";
 const addNote = (title, body) => {
   const notes = loadNotes(fileName);
 
+  debugger;
+
   const duplicateNote = notes.filter(note => note.title === title);
 
   // console.log('duplicateNote:', duplicateNote)
@@ -15,12 +17,11 @@ const addNote = (title, body) => {
       title: title,
       body: body
     });
+    saveNotes(notes);
     console.log(chalk.green.inverse("New note added!"));
   } else {
     console.log(chalk.red.inverse("Note taken"));
   }
-
-  saveNotes(notes);
 };
 
 // Remove Note
@@ -34,8 +35,8 @@ const removeNote = title => {
   if (notes.length === notesToKeep.length)
     console.log(chalk.red.inverse("No Note Found"));
   else {
-    console.log(chalk.green.inverse("Note Removed"));
     saveNotes(notesToKeep);
+    console.log(chalk.green.inverse("Note Removed"));
   }
 };
 
