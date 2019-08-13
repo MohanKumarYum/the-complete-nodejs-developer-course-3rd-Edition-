@@ -7,8 +7,6 @@ const fileName = "notes.json";
 const addNote = (title, body) => {
   const notes = loadNotes(fileName);
 
-  debugger;
-
   const duplicateNote = notes.filter(note => note.title === title);
 
   // console.log('duplicateNote:', duplicateNote)
