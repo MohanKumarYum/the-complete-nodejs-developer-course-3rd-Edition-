@@ -12,13 +12,16 @@ const forecast = (latitude, longitude, callback) => {
     if (error) {
       callback("Unable to connect to the weather service!");
     } else if (body.error) {
-      callback("Unable to find location");
+      callback("Unable to find weather forecast for the, Latitude :" + latitude + " Longitude: " + longitude);
     } else {
-      callback(undefined, {
-        summary: body.daily.data[0].summary,
-        temperature: body.currently.temperature,
-        precipprobability: body.currently.precipProbability
-      });
+      callback(undefined,
+        body.daily.data[0].summary +
+            " It is currently " +
+            body.currently.temperature +
+            " degrees out. There is " +
+            body.currently.precipProbability +
+            "% chance of rain."
+      );
     }
   });
 };
