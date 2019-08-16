@@ -23,13 +23,13 @@ app.use(express.static(publicDirectoryPath));
 
 
 // app.get("/about", (req, res) => res.send("<h1>About</h1>"));
-// app.get("/weather", (req, res) =>
-//   res.send({
-//     forecast: "It is Sunny day.",
-//     location: "Bengaluru, Karnataka, India"
-//   })
-// );
 
+app.get("/weather", (req, res) =>
+  res.send({
+    forecast: "It is Sunny day.",
+    location: "Bengaluru, Karnataka, India"
+  })
+);
 
 app.listen(port, () => {
   console.log("Server is up on port " + port);
