@@ -3,12 +3,24 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-console.log(__dirname);
-console.log(__filename);
-
 const publicDirectoryPath = path.join(__dirname, "../public");
-console.log("publicDirectoryPath:", publicDirectoryPath);
+
 app.use(express.static(publicDirectoryPath));
+app.set("view engine", "hbs");
+
+app.get("",(req, res) => res.render("index",{
+  title: "Weather App v2",
+  name: "Mohan Kumar"
+}));
+
+app.get("/about",(req, res) => res.render("about",{
+  title: "About Me",
+  name: "Mohan Kumar"
+}));
+
+app.get("/help",(req, res) => res.render("help",{
+  helpText: "Help Page via hbs"
+}));
 
 // app.get("/help", (req, res) =>
 //   res.send([
@@ -20,7 +32,6 @@ app.use(express.static(publicDirectoryPath));
 //     }
 //   ])
 // );
-
 
 // app.get("/about", (req, res) => res.send("<h1>About</h1>"));
 
