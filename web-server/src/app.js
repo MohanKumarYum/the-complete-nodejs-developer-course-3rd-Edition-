@@ -1,6 +1,8 @@
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
+const geocode = require("./utils/geocode");
+const forecast = require("./utils/forecast");
 
 // Setup Express web framework
 const app = express();
@@ -42,16 +44,17 @@ app.get("/help", (req, res) =>
 );
 
 app.get("/weather", (req, res) => {
-  if (!req.query.address) {
-    return res.send({
-      error: "You must provide an address"
+  if (!req.query.address)
+    return res.send({ error: "You must provide an address" });
+
+  geocode(encodeURIComponent(req.query.address), (error, { latitude, longitude, location }) => {
+    if (error) return console.log("Error:", error);
+
+    forecast(latitude, longitude, (forecastError, forecastData) => {
+      if (forecastError) return console.log("Error:", forecastError);
+
+      res.send({ location, forecast: forecastData, address: req.query.address });
     });
-  }
-  res.send({
-    // "U 701A 3 Broughton ST Parramatta NSW 2150"
-    forecast: "It is Sunny day.",
-    location: "Bengaluru, Karnataka, India",
-    address: decodeURIComponent(req.query.address)
   });
 });
 
