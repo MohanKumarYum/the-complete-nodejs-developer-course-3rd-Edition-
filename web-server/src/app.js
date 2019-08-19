@@ -47,11 +47,11 @@ app.get("/weather", (req, res) => {
   if (!req.query.address)
     return res.send({ error: "You must provide an address" });
 
-  geocode(encodeURIComponent(req.query.address), (error, { latitude, longitude, location }) => {
-    if (error) return console.log("Error:", error);
+  geocode(encodeURIComponent(req.query.address), (error, { latitude, longitude, location } = {}) => {
+    if (error) return res.send({Error: error});
 
     forecast(latitude, longitude, (forecastError, forecastData) => {
-      if (forecastError) return console.log("Error:", forecastError);
+      if (forecastError) return res.send({Error: forecastError});
 
       res.send({ location, forecast: forecastData, address: req.query.address });
     });
@@ -64,7 +64,6 @@ app.get("/products", (req, res) => {
       error: "You must provide a search term."
     });
   }
-  console.log("req.query.search: ", req.query.search);
   res.send({
     products: []
   });
