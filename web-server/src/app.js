@@ -47,15 +47,22 @@ app.get("/weather", (req, res) => {
   if (!req.query.address)
     return res.send({ error: "You must provide an address" });
 
-  geocode(encodeURIComponent(req.query.address), (error, { latitude, longitude, location } = {}) => {
-    if (error) return res.send({Error: error});
+  geocode(
+    encodeURIComponent(req.query.address),
+    (error, { latitude, longitude, location } = {}) => {
+      if (error) return res.send({ error: error });
 
-    forecast(latitude, longitude, (forecastError, forecastData) => {
-      if (forecastError) return res.send({Error: forecastError});
+      forecast(latitude, longitude, (forecastError, forecastData) => {
+        if (forecastError) return res.send({ error: forecastError });
 
-      res.send({ location, forecast: forecastData, address: req.query.address });
-    });
-  });
+        res.send({
+          location,
+          forecast: forecastData,
+          address: req.query.address
+        });
+      });
+    }
+  );
 });
 
 app.get("/products", (req, res) => {
